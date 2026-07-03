@@ -14,7 +14,7 @@ NeuroFin AI Platform busca evolucionar desde una API de forecasting financiero h
 
 La visión de largo plazo incluye capacidades como explicación de predicciones, interpretación de indicadores, resumen de noticias financieras, generación de reportes y agentes conversacionales especializados.
 
-Microsoft Azure ofrece servicios relevantes para esta evolución, especialmente Azure AI Foundry, Azure OpenAI y Azure Machine Learning.
+Microsoft Azure ofrece servicios especialmente relevantes para esta evolución, en particular Azure AI Foundry, Azure OpenAI y Azure Machine Learning.
 
 ---
 
@@ -119,7 +119,7 @@ La integración con Azure AI deberá cumplir:
 * No acoplar el dominio a Azure.
 * Encapsular clientes Azure en infraestructura.
 * Usar contratos internos para servicios de explicación.
-* Mantener trazabilidad de respuestas generadas por IA.
+* Mantener trazabilidad de las respuestas generadas por IA.
 * Evitar recomendaciones financieras absolutas.
 * Registrar prompts, versiones y resultados cuando aplique.
 
@@ -208,7 +208,7 @@ El MVP se enfocará en:
 * Pruebas automatizadas.
 * Documentación profesional.
 
-La integración Azure AI queda documentada como ruta futura.
+La integración Azure AI queda documentada como una ruta futura.
 
 ---
 

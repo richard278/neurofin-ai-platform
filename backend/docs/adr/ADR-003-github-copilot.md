@@ -12,9 +12,9 @@
 
 NeuroFin AI Platform se desarrolla como un proyecto profesional de aprendizaje, portafolio e investigación aplicada.
 
-El proyecto busca demostrar no solo capacidad de programación, sino también criterio de arquitectura, documentación, pruebas y uso responsable de herramientas modernas de inteligencia artificial para ingeniería de software.
+El proyecto busca demostrar capacidad de programación y, al mismo tiempo, criterio de arquitectura, documentación, pruebas y uso responsable de herramientas modernas de inteligencia artificial para ingeniería de software.
 
-GitHub Copilot puede acelerar tareas de implementación, documentación, pruebas y refactorización, pero no debe reemplazar el criterio técnico del ingeniero.
+GitHub Copilot puede acelerar tareas de implementación, documentación, pruebas y refactorización, pero nunca debe reemplazar el criterio técnico del ingeniero.
 
 ---
 
@@ -39,7 +39,7 @@ Las decisiones finales seguirán siendo responsabilidad del desarrollador.
 
 El uso de Copilot está alineado con la industria moderna, especialmente en flujos de trabajo de desarrollo asistido por IA.
 
-Para reclutadores, el valor no está en decir que el código fue asistido por IA, sino en demostrar que el ingeniero sabe:
+Para reclutadores, el valor no está en mencionar que el código fue asistido por IA, sino en demostrar que el ingeniero sabe:
 
 * Diseñar arquitectura.
 * Revisar sugerencias.
@@ -69,7 +69,7 @@ El uso de Copilot seguirá estos principios:
 * Mayor velocidad de desarrollo.
 * Mejor soporte para pruebas y documentación.
 * Mayor productividad en código repetitivo.
-* Apoyo para explorar alternativas técnicas.
+* Apoyo para explorar alternativas técnicas con rapidez.
 * Entrenamiento práctico en flujos modernos con IA.
 
 ---

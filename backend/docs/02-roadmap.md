@@ -36,7 +36,7 @@ El objetivo es construir una plataforma sostenible, documentada y preparada para
 
 Objetivo:
 
-Construir una versión profesional, funcional y demostrable de NeuroFin AI Platform en un tiempo razonable, orientada a fortalecer el portafolio técnico y servir como evidencia de competencias ante reclutadores internacionales.
+Construir una versión profesional, funcional y demostrable de NeuroFin AI Platform en un tiempo razonable, orientada a fortalecer el portafolio técnico y mostrar competencias claras ante reclutadores internacionales.
 
 Esta versión constituye el objetivo principal de la primera etapa del proyecto.
 
@@ -283,12 +283,6 @@ Una vez completado el MVP Profesional, la plataforma evolucionará incorporando 
 * Asistente de Riesgo.
 * Asistente de Portafolio.
 * Explicador de Predicciones.
-
-## Mobile Platform
-
-* React Native.
-* Notificaciones.
-* Dashboards móviles.
 
 ## Enterprise Features
 

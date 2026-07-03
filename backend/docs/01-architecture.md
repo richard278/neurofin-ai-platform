@@ -40,7 +40,7 @@ La plataforma se construirá bajo los siguientes principios:
 # Arquitectura General
 
 ```
-                     React Native
+                        React + Vite
                            │
                            │ HTTPS
                            ▼

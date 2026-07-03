@@ -14,7 +14,7 @@ NeuroFin AI Platform tiene como objetivo aplicar inteligencia artificial y anál
 
 Sin embargo, los mercados financieros son complejos, ruidosos y difíciles de predecir. Por ello, el proyecto no debe iniciar directamente con modelos avanzados sin antes establecer líneas base, métricas y contratos claros.
 
-El MVP necesita ser comprensible para reclutadores y defendible técnicamente. La evolución futura puede incorporar modelos más sofisticados conforme la plataforma madure.
+El MVP debe ser comprensible para reclutadores y sólido desde el punto de vista técnico. La evolución futura puede incorporar modelos más sofisticados conforme la plataforma madure.
 
 ---
 
@@ -32,12 +32,12 @@ El modelo inicial será un predictor simple basado en promedio móvil o media hi
 
 Una estrategia progresiva permite:
 
-* Validar la arquitectura antes de complejizar el modelo.
+* Validar la arquitectura antes de aumentar la complejidad del modelo.
 * Tener una API funcional desde el inicio.
 * Construir pruebas simples.
 * Comparar modelos futuros contra una línea base.
 * Evitar promesas exageradas de predicción financiera.
-* Mantener una narrativa profesional y realista.
+* Mantener una narrativa profesional, sobria y realista.
 
 ---
 
@@ -193,7 +193,7 @@ La predicción financiera no garantiza resultados de inversión.
 
 Mitigación:
 
-* Presentar el proyecto como educativo, analítico y experimental.
+* Presentar el proyecto como educativo, analítico y experimental, no como una promesa de inversión.
 * Evitar lenguaje de recomendación financiera definitiva.
 
 ---
@@ -256,4 +256,4 @@ La estrategia será exitosa si:
 
 # Conclusión
 
-NeuroFin AI Platform no debe iniciar intentando predecir mercados con modelos complejos sin fundamento. Debe iniciar con una arquitectura sólida, un baseline funcional y una ruta clara de evolución. Esta decisión fortalece tanto el MVP para portafolio como la futura plataforma SaaS.
+NeuroFin AI Platform no debe iniciar intentando predecir mercados con modelos complejos sin fundamento. Debe empezar con una arquitectura sólida, un baseline funcional y una ruta clara de evolución. Esta decisión fortalece tanto el MVP para portafolio como la futura plataforma SaaS.

@@ -14,7 +14,7 @@ NeuroFin AI Platform requiere una API moderna para exponer servicios de predicci
 
 El backend debe ser compatible con Python, Machine Learning, validación fuerte de datos, documentación automática y despliegue cloud.
 
-El proyecto también debe ser atractivo para reclutadores de Estados Unidos, donde FastAPI, Python, APIs REST y cloud son competencias ampliamente valoradas.
+El proyecto también debe presentarse con un estándar familiar para reclutadores de Estados Unidos, donde FastAPI, Python, APIs REST y cloud son competencias muy valoradas.
 
 ---
 
@@ -42,7 +42,7 @@ FastAPI es adecuado para NeuroFin porque:
 * Genera documentación automática.
 * Tiene buen rendimiento.
 * Es compatible con desarrollo de APIs de Machine Learning.
-* Permite una experiencia clara para demos técnicas.
+* Permite una experiencia clara en demos técnicas.
 * Puede desplegarse en contenedores y plataformas cloud.
 
 ---
@@ -54,7 +54,7 @@ FastAPI es adecuado para NeuroFin porque:
 * Validación robusta de entrada.
 * Buena integración con pruebas mediante TestClient.
 * Compatibilidad directa con modelos Python.
-* Buena presentación para portafolio profesional.
+* Excelente presentación para un portafolio profesional.
 
 ---
 
@@ -159,4 +159,4 @@ FastAPI será una elección exitosa si permite:
 
 # Conclusión
 
-FastAPI es la opción correcta para el backend de NeuroFin AI Platform porque combina productividad, documentación automática, tipado moderno y excelente compatibilidad con Machine Learning en Python. Esta decisión fortalece el MVP como portafolio y mantiene abierta la ruta hacia una futura plataforma SaaS.
+FastAPI es la opción correcta para el backend de NeuroFin AI Platform porque combina productividad, documentación automática, tipado moderno y una integración natural con Machine Learning en Python. Esta decisión fortalece el MVP como portafolio y deja abierta una evolución ordenada hacia una plataforma SaaS.

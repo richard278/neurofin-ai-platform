@@ -1,0 +1,10 @@
+{
+  "name": "neurofin-ai-platform-root",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Root orchestrator for NeuroFin-AI-Platform",
+  "scripts": {
+    "dev": "python run.py",
+    "start": "python run.py"
+  }
+}

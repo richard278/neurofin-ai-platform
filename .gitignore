@@ -18,6 +18,9 @@ backend/.venv/
 # Environment files
 .env
 .env.local
+backend/.env
+frontend/.env
+frontend/.env.local
 
 # IDE
 .vscode/
@@ -30,7 +33,32 @@ Thumbs.db
 # Jupyter
 .ipynb_checkpoints/
 
-# Build artifacts
+# Backend build artifacts
 dist/
 build/
 *.egg-info/
+
+# Frontend dependencies
+node_modules/
+frontend/node_modules/
+
+# Frontend build output
+frontend/dist/
+frontend/build/
+dist/
+build/
+
+# TypeScript / Vite generated files
+*.tsbuildinfo
+frontend/*.tsbuildinfo
+frontend/tsconfig.tsbuildinfo
+frontend/tsconfig.node.tsbuildinfo
+frontend/vite.config.js
+frontend/vite.config.d.ts
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*

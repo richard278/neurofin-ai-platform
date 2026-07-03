@@ -10,7 +10,7 @@
 
 # Contexto
 
-NeuroFin AI Platform nace como un proyecto de inteligencia artificial financiera con aspiración de crecer más allá de un prototipo académico.
+NeuroFin AI Platform nace como un producto de inteligencia artificial financiera con aspiración de crecer más allá de un MVP aislado.
 
 El sistema debe iniciar como MVP para portafolio profesional, pero su diseño debe permitir una evolución futura hacia una plataforma SaaS con múltiples módulos: forecasting, análisis de mercado, modelos de Machine Learning, reportes, portafolios, usuarios y capacidades de IA generativa.
 
@@ -44,7 +44,7 @@ Clean Architecture permite:
 * Integrar nuevos modelos de Machine Learning bajo contratos estables.
 * Cambiar almacenamiento en memoria por PostgreSQL en fases futuras.
 * Migrar a Azure sin contaminar el dominio con SDKs cloud.
-* Presentar el proyecto como evidencia de arquitectura profesional.
+* Presentar el proyecto como una demostración clara de criterio arquitectónico.
 
 ---
 
@@ -61,7 +61,7 @@ Clean Architecture permite:
 
 # Consecuencias negativas
 
-* La estructura inicial es más extensa que un prototipo simple.
+* La estructura inicial es más extensa que una solución plana.
 * Requiere disciplina para no saltarse capas.
 * Algunas funciones pequeñas pueden parecer sobrearquitecturadas durante el MVP.
 
@@ -147,4 +147,4 @@ La decisión será exitosa si el proyecto permite:
 
 # Conclusión
 
-Clean Architecture es adecuada para NeuroFin AI Platform porque alinea el MVP inicial con una visión profesional de largo plazo. Aunque agrega estructura desde el inicio, esa estructura comunica madurez técnica y prepara el camino hacia una futura plataforma SaaS.
+Clean Architecture es la base correcta para NeuroFin AI Platform porque alinea un MVP bien definido con una visión de producto de largo plazo. La estructura adicional no es un costo innecesario: es la forma de comunicar seriedad técnica y dejar lista la plataforma para crecer.

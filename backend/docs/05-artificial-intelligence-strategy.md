@@ -24,13 +24,13 @@ La estrategia prioriza la interpretabilidad, la calidad de los datos, la reprodu
 
 # Filosofía
 
-NeuroFin AI Platform considera la Inteligencia Artificial como un proceso evolutivo.
+NeuroFin AI Platform aborda la Inteligencia Artificial como una capacidad que madura por etapas.
 
 Los modelos más complejos no sustituyen necesariamente a los más simples.
 
-Cada técnica será utilizada cuando aporte valor real al problema financiero que intenta resolver.
+Cada técnica se utilizará solo cuando aporte valor real al problema financiero que intenta resolver.
 
-La plataforma favorecerá modelos interpretables durante el MVP Profesional y evolucionará hacia modelos más sofisticados conforme aumente la madurez del proyecto.
+La plataforma privilegiará modelos interpretables durante el MVP Profesional y evolucionará hacia opciones más sofisticadas conforme aumente la madurez del proyecto.
 
 ---
 
@@ -46,7 +46,7 @@ La plataforma favorecerá modelos interpretables durante el MVP Profesional y ev
         Statistical Models
 ```
 
-Cada nivel representa una capacidad superior de análisis y predicción.
+Cada nivel representa una mayor capacidad de análisis y predicción.
 
 ---
 
@@ -135,7 +135,7 @@ Estado:
 
 Objetivo:
 
-Incorporar modelos fundacionales capaces de asistir al usuario en lenguaje natural.
+Incorporar modelos fundacionales capaces de asistir al usuario con lenguaje natural.
 
 Tecnologías previstas:
 
@@ -250,7 +250,7 @@ Herramientas futuras:
 * Feature Importance
 * Explainable AI
 
-El usuario deberá comprender por qué una predicción fue generada.
+El usuario deberá comprender por qué se generó una predicción.
 
 ---
 

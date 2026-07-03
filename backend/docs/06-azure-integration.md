@@ -22,7 +22,7 @@ La integración cloud no forma parte obligatoria del primer MVP ejecutable local
 
 # Enfoque estratégico
 
-NeuroFin AI Platform se desarrollará primero como un MVP profesional, sencillo de ejecutar, explicar y auditar por reclutadores técnicos.
+NeuroFin AI Platform se desarrollará primero como un MVP profesional, fácil de ejecutar, explicar y auditar por reclutadores técnicos.
 
 Posteriormente, la plataforma podrá evolucionar hacia una arquitectura cloud usando servicios de Azure para:
 
@@ -252,7 +252,7 @@ Entorno:
 
 Resultado esperado:
 
-Proyecto presentable a reclutadores como evidencia de capacidad backend, diseño de arquitectura y pensamiento de producto.
+Proyecto presentable a reclutadores como demostración de capacidad backend, diseño de arquitectura y pensamiento de producto.
 
 ---
 
@@ -407,7 +407,7 @@ NeuroFin AI Platform puede servir como proyecto demostrativo para competencias a
 * Desarrollo de APIs modernas.
 * Integración de IA generativa en aplicaciones.
 
-El proyecto tiene valor académico y profesional porque conecta software real con servicios cloud de Microsoft.
+El proyecto tiene valor profesional y formativo porque conecta software real con servicios cloud de Microsoft.
 
 ---
 

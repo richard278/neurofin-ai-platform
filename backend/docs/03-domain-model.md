@@ -18,13 +18,13 @@ Este documento define el modelo de dominio de NeuroFin AI Platform.
 
 El objetivo es representar los conceptos fundamentales del negocio financiero mediante un lenguaje común (Ubiquitous Language) independiente de cualquier tecnología o framework.
 
-El dominio constituye el núcleo de la plataforma y permanecerá estable incluso si cambian FastAPI, Azure, la base de datos o el frontend.
+El dominio es el núcleo de la plataforma y debe permanecer estable incluso si cambian FastAPI, Azure, la base de datos o el frontend.
 
 ---
 
 # Filosofía del dominio
 
-NeuroFin AI Platform se construye bajo el principio de que los datos financieros representan conocimiento potencial.
+NeuroFin AI Platform parte de una idea simple: los datos financieros representan conocimiento en potencia.
 
 La plataforma transforma:
 
@@ -50,7 +50,7 @@ Apoyo a la toma de decisiones.
 
 # Lenguaje Ubicuo (Ubiquitous Language)
 
-Todos los componentes del proyecto utilizarán la misma terminología.
+Todo el proyecto utilizará la misma terminología.
 
 ## Asset
 
@@ -440,8 +440,8 @@ Las reglas del negocio permanecerán inalterables incluso cuando cambien las tec
 
 ---
 
-# Objetivo Final
+# Objetivo de largo plazo
 
-Construir un modelo de dominio robusto, expresivo y preparado para evolucionar durante los próximos años, permitiendo incorporar nuevas capacidades de Inteligencia Artificial sin modificar las reglas fundamentales del negocio financiero.
+Construir un modelo de dominio robusto, expresivo y preparado para evolucionar durante los próximos años, permitiendo incorporar nuevas capacidades de Inteligencia Artificial sin alterar las reglas fundamentales del negocio financiero.
 
-El dominio constituye el activo más importante de NeuroFin AI Platform y será la referencia para todas las decisiones de diseño, implementación y evolución futura.
+El dominio es el activo más valioso de NeuroFin AI Platform y será la referencia para todas las decisiones de diseño, implementación y evolución futura.

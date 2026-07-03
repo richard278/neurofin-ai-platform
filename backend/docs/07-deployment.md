@@ -313,7 +313,7 @@ Ventajas:
 
 * Simplicidad.
 * Rápida publicación.
-* Útil para prototipo.
+* Útil para una demo rápida.
 
 Restricción:
 

@@ -70,7 +70,7 @@ NeuroFin AI Platform se construye sobre los siguientes principios:
 * Implementar modelos de Machine Learning.
 * Incorporar análisis de sentimiento financiero.
 * Construir un sistema de indicadores técnicos.
-* Crear una aplicación móvil con React Native.
+* Crear una experiencia web con React, Vite y TypeScript.
 
 ## Largo plazo
 
@@ -146,7 +146,8 @@ Inteligencia Artificial
 
 Frontend
 
-* React Native
+* React
+* Vite
 * TypeScript
 
 Persistencia

@@ -16,7 +16,7 @@
 
 Este documento define el diseño inicial de la API REST de NeuroFin AI Platform.
 
-La API será la interfaz principal entre los clientes externos, el frontend web, futuras aplicaciones móviles y los servicios internos de análisis financiero, predicción e inteligencia artificial.
+La API será la interfaz principal entre el frontend web, otros clientes externos y los servicios internos de análisis financiero, predicción e inteligencia artificial.
 
 ---
 
@@ -32,7 +32,7 @@ La API se construirá bajo los siguientes principios:
 * Separación entre dominio y presentación.
 * Manejo uniforme de errores.
 * Documentación automática mediante OpenAPI.
-* Compatibilidad futura con Azure y clientes móviles.
+* Compatibilidad futura con Azure y otros clientes web.
 
 ---
 
