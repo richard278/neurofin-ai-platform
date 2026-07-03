@@ -21,11 +21,11 @@ const PRESETS: Preset[] = [
   },
   {
     id: 'default_rate',
-    name: 'KrediSense Defaults',
-    symbol: 'KREDISENSE_DEFAULTS',
+    name: 'NeuroSense Defaults',
+    symbol: 'NEUROSENSE_DEFAULTS',
     horizon: 24,
     values: [0.045, 0.048, 0.052, 0.050, 0.055, 0.058, 0.062, 0.065, 0.070, 0.075, 0.082, 0.080],
-    description: 'KrediSense active credit portfolios default ratio',
+    description: 'NeuroSense active credit portfolios default ratio',
   },
   {
     id: 'compound_interest',
@@ -384,8 +384,8 @@ export function ForecastPage() {
               cx={getX(point.index)}
               cy={getY(point.value)}
               r={hoveredPoint?.index === point.index ? 6 : 4}
-              fill={point.isForecast ? '#0FA47A' : '#3b82f6'}
-              stroke="#0f172a"
+              fill={point.isForecast ? 'var(--accent)' : 'var(--metric-history-color)'}
+              stroke="var(--bg)"
               strokeWidth={hoveredPoint?.index === point.index ? 2 : 1}
               className="chart-point-marker"
               onMouseMove={(e) => handleMouseMove(e, point)}
@@ -434,14 +434,14 @@ export function ForecastPage() {
   return (
     <div className="page-stack">
       {/* Title block */}
-      <section className="panel">
+      <section className="panel" style={{ borderTop: '1px solid rgba(255, 255, 255, 0.04)' }}>
         <div className="panel__header">
           <div>
-            <p className="panel__eyebrow">Interactive Engine</p>
-            <h2 className="panel__title">Run and Analyze Asset Forecasts</h2>
+            <p className="panel__eyebrow" style={{ color: 'var(--accent)' }}>Interactive Engine</p>
+            <h2 className="panel__title">Run & Analyze Asset Forecasts</h2>
           </div>
         </div>
-        <p className="muted">
+        <p className="muted" style={{ color: 'var(--text-soft)', margin: 0, fontSize: '0.92rem', lineHeight: '1.5' }}>
           Execute automated statistical moving average projections on credit risk, delinquency data, or simulated financial time-series. Select a preset below or supply a custom CSV series.
         </p>
       </section>
@@ -449,7 +449,7 @@ export function ForecastPage() {
       {/* Main Grid layout */}
       <div className="forecast-placeholder">
         {/* Left Side: Parameters Form */}
-        <section className="panel">
+        <section className="panel" style={{ borderTop: '1px solid rgba(255, 255, 255, 0.04)' }}>
           <h3 className="panel__title" style={{ fontSize: '1.2rem', marginBottom: 'var(--space-4)' }}>
             Parameters
           </h3>
@@ -540,7 +540,7 @@ export function ForecastPage() {
         </section>
 
         {/* Right Side: Results Display */}
-        <section className="panel" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
+        <section className="panel" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)', borderTop: '1px solid rgba(255, 255, 255, 0.04)' }}>
           <h3 className="panel__title" style={{ fontSize: '1.2rem', marginBottom: '0' }}>
             Forecast Projections
           </h3>
@@ -581,7 +581,7 @@ export function ForecastPage() {
               <div className="hero__grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--space-3)' }}>
                 <div className="metric-card" style={{ padding: 'var(--space-4)' }}>
                   <p className="metric-card__label">Origin Value</p>
-                  <p className="metric-card__value" style={{ fontSize: '1.5rem', color: '#60a5fa' }}>
+                  <p className="metric-card__value" style={{ fontSize: '1.5rem', color: 'var(--metric-history-color)' }}>
                     {lastVal.toFixed(3)}
                   </p>
                   <p className="metric-card__description" style={{ fontSize: '0.75rem' }}>
