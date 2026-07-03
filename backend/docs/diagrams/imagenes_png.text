@@ -1,0 +1,7 @@
+"Ninguna funcionalidad importante se implementa sin que antes exista 
+una decisión de arquitectura o una visión documentada que la respalde."
+
+
+│  ├── architecture.png
+│  ├── data-flow.png
+│  └── deployment.png
