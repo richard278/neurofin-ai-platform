@@ -1,4 +1,3 @@
-import ast
 from pathlib import Path
 
 from alembic.config import Config
@@ -40,65 +39,48 @@ def test_single_head_revision() -> None:
     assert len(heads) == 1
 
 
-def test_base_equals_head() -> None:
+def test_baseline_revision_remains_root() -> None:
     ini_path = Path(__file__).parent.parent / "alembic.ini"
     config = Config(str(ini_path))
     script = ScriptDirectory.from_config(config)
 
-    assert script.get_bases()[0] == script.get_heads()[0]
+    bases = script.get_bases()
+    assert bases == ["116464527395"]
+
+    base_rev = script.get_revision("116464527395")
+    assert base_rev is not None
+    assert base_rev.down_revision is None
 
 
-def test_head_down_revision_is_none() -> None:
+def test_auth_head_descends_from_baseline() -> None:
     ini_path = Path(__file__).parent.parent / "alembic.ini"
     config = Config(str(ini_path))
     script = ScriptDirectory.from_config(config)
-    head_rev = script.get_revision(script.get_heads()[0])
 
+    assert script.get_heads() == ["20260824a001"]
+
+    head_rev = script.get_revision("20260824a001")
     assert head_rev is not None
-    assert head_rev.down_revision is None
+    assert head_rev.down_revision == "116464527395"
 
 
-def test_baseline_upgrade_and_downgrade_are_noop() -> None:
-    ini_path = Path(__file__).parent.parent / "alembic.ini"
-    config = Config(str(ini_path))
-    script = ScriptDirectory.from_config(config)
-    head_rev = script.get_revision(script.get_heads()[0])
-    assert head_rev is not None
-
-    module = head_rev.module
-    assert hasattr(module, "upgrade")
-    assert hasattr(module, "downgrade")
-
-
-def test_env_py_target_metadata_is_none() -> None:
+def test_env_py_uses_infrastructure_metadata() -> None:
     env_path = Path(__file__).parent.parent / "alembic" / "env.py"
-    assert env_path.is_file(), "alembic/env.py must exist"
-
     source = env_path.read_text(encoding="utf-8")
-    tree = ast.parse(source)
 
-    target_metadata_values = []
-    for node in ast.walk(tree):
-        if isinstance(node, ast.Assign):
-            for target in node.targets:
-                if (
-                    isinstance(target, ast.Name)
-                    and target.id == "target_metadata"
-                    and isinstance(node.value, ast.Constant)
-                ):
-                    target_metadata_values.append(node.value.value)
-
-    assert None in target_metadata_values, "target_metadata must be set to None in env.py"
+    assert "from app.infrastructure.database.base import Base" in source
+    assert "from app.infrastructure.database.models.user import UserModel" in source
+    assert "target_metadata = Base.metadata" in source
 
 
 def test_baseline_revision_no_ddl_operations() -> None:
     ini_path = Path(__file__).parent.parent / "alembic.ini"
     config = Config(str(ini_path))
     script = ScriptDirectory.from_config(config)
-    head_rev = script.get_revision(script.get_heads()[0])
-    assert head_rev is not None
+    base_rev = script.get_revision("116464527395")
+    assert base_rev is not None
 
-    rev_file = Path(head_rev.path)
+    rev_file = Path(base_rev.path)
     source = rev_file.read_text(encoding="utf-8")
 
     forbidden = [
