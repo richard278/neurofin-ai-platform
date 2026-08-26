@@ -6,7 +6,9 @@ from app.infrastructure.database.engine import create_database_engine
 from app.infrastructure.database.session import create_session_factory
 
 
-def test_create_engine_database_url_absent() -> None:
+def test_create_engine_database_url_absent(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv("DATABASE_URL", raising=False)
+    monkeypatch.delenv("NEUROFIN_DATABASE_URL", raising=False)
     settings = Settings(_env_file=None)
     with pytest.raises(RuntimeError) as exc_info:
         create_database_engine(settings)

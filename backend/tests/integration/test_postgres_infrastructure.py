@@ -1,8 +1,12 @@
 import os
 from collections.abc import Generator
+from pathlib import Path
 
 import pytest
+from alembic.config import Config
+from alembic.script import ScriptDirectory
 from sqlalchemy import text
+from sqlalchemy.engine import make_url
 
 from app.core.config import get_settings
 from app.infrastructure.database.engine import create_database_engine
@@ -36,6 +40,10 @@ async def test_pg01_real_connectivity() -> None:
     settings = get_settings()
     assert settings.database_url is not None, "DATABASE_URL must be set for integration tests"
 
+    url = make_url(str(settings.database_url))
+    expected_db = url.database
+    expected_user = url.username
+
     engine = create_database_engine(settings)
     try:
         async with engine.connect() as conn:
@@ -51,8 +59,8 @@ async def test_pg01_real_connectivity() -> None:
             pid_res = await conn.execute(text("SELECT pg_backend_pid()"))
             pid = pid_res.scalar()
 
-            assert db_name == "neurofin_nf_data_01_f"
-            assert user_name == "neurofin_nf_data_01_f"
+            assert db_name == expected_db
+            assert user_name == expected_user
             assert server_version.startswith("18.4")
             assert isinstance(pid, int) and pid > 0
     finally:
@@ -64,6 +72,9 @@ async def test_pg02_async_session_execution() -> None:
     settings = get_settings()
     assert settings.database_url is not None
 
+    url = make_url(str(settings.database_url))
+    expected_db = url.database
+
     engine = create_database_engine(settings)
     factory = create_session_factory(engine)
     session = factory()
@@ -71,7 +82,7 @@ async def test_pg02_async_session_execution() -> None:
     try:
         res = await session.execute(text("SELECT current_database()"))
         db_name = res.scalar()
-        assert db_name == "neurofin_nf_data_01_f"
+        assert db_name == expected_db
     finally:
         await session.close()
         await engine.dispose()
@@ -142,6 +153,13 @@ async def test_pg05_alembic_version_final() -> None:
     settings = get_settings()
     assert settings.database_url is not None
 
+    backend_dir = Path(__file__).resolve().parents[2]
+    alembic_ini = backend_dir / "alembic.ini"
+    alembic_cfg = Config(str(alembic_ini))
+    script_dir = ScriptDirectory.from_config(alembic_cfg)
+    expected_head = script_dir.get_current_head()
+    assert expected_head is not None, "Expected a valid Alembic head"
+
     engine = create_database_engine(settings)
     factory = create_session_factory(engine)
     session = factory()
@@ -149,7 +167,7 @@ async def test_pg05_alembic_version_final() -> None:
     try:
         res = await session.execute(text("SELECT version_num FROM alembic_version"))
         version_num = res.scalar()
-        assert version_num == "116464527395"
+        assert version_num == expected_head
     finally:
         await session.close()
         await engine.dispose()
