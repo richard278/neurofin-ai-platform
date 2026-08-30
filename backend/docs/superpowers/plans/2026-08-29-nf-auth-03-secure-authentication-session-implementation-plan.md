@@ -559,8 +559,18 @@ def main() -> int:
             raise RuntimeError("benchmark verification failed")
         timings_ms.append(elapsed_ms)
 
-    ordered = sorted(timings_ms)
-    p95_index = min(len(ordered) - 1, int(len(ordered) * 0.95))
+    median_verify_ms = round(statistics.median(timings_ms), 3)
+    p95_verify_ms = round(nearest_rank_percentile(timings_ms, 0.95), 3)
+
+    justification = (
+        f"Candidate Argon2id configuration (memory_cost={settings.argon2_memory_cost_kib} KiB [64 MiB], "
+        f"time_cost={settings.argon2_time_cost}, parallelism={settings.argon2_parallelism}) "
+        f"measured median={median_verify_ms}ms and p95={p95_verify_ms}ms over {args.samples} samples. "
+        "The 64 MiB memory cost provides memory-hardness defense against GPU/ASIC cracking. "
+        "This latency evidence is specific to the current execution environment and is NOT claimed "
+        "to be a universally optimal baseline configuration. Independent benchmarking on target "
+        "deployment hardware is required prior to production deployment."
+    )
 
     evidence = {
         "python": sys.version,
@@ -574,8 +584,10 @@ def main() -> int:
         "hash_len": settings.argon2_hash_len,
         "salt_len": settings.argon2_salt_len,
         "samples": args.samples,
-        "median_verify_ms": round(statistics.median(timings_ms), 3),
-        "p95_verify_ms": round(ordered[p95_index], 3),
+        "median_verify_ms": median_verify_ms,
+        "p95_verify_ms": p95_verify_ms,
+        "percentile_method": "nearest-rank: ceil(percentile * samples), 1-indexed",
+        "selection_justification": justification,
     }
 
     args.output.parent.mkdir(parents=True, exist_ok=True)

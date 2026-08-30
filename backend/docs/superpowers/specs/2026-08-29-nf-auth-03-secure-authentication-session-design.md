@@ -2182,6 +2182,7 @@ Owns:
 
 - `PasswordCredential`;
 - `PasswordHasher`;
+- `CredentialRepository` Application port and semantic repository errors (`CredentialRepositoryError`, `CredentialAlreadyExistsError`);
 - concrete Argon2id adapter;
 - hash/verify/needs_rehash;
 - dummy verification support;
@@ -2196,7 +2197,7 @@ Owns:
 
 - `user_credentials` ORM;
 - Alembic migration;
-- `CredentialRepository`;
+- SQLAlchemy `CredentialRepository` adapter implementing the Application port;
 - injected `AsyncSession`;
 - insert-only semantics;
 - structured duplicate translation;

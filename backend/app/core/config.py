@@ -16,6 +16,15 @@ class Settings(BaseSettings):
     ]
     default_forecast_horizon: int = 12
     database_url: PostgresDsn | None = None
+    argon2_memory_cost_kib: int = 65536
+    argon2_time_cost: int = 3
+    argon2_parallelism: int = 4
+    argon2_hash_len: int = 32
+    argon2_salt_len: int = 16
+    auth_dummy_password_hash: str = (
+        "$argon2id$v=19$m=65536,t=3,p=4$Fl1Grf6vpX5SKg0514uA/w$"
+        "B1b6Q8zwVQTD9GWQzzk6qXlmaYCjPcfUXI1rbfTDKRo"
+    )
 
     model_config = SettingsConfigDict(
         env_file=".env",

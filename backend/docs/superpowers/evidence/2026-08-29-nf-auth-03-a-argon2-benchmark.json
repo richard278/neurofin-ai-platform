@@ -1,0 +1,17 @@
+{
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.19045-SP0",
+  "machine": "AMD64",
+  "processor": "Intel64 Family 6 Model 60 Stepping 3, GenuineIntel",
+  "algorithm": "Argon2id",
+  "memory_cost_kib": 65536,
+  "time_cost": 3,
+  "parallelism": 4,
+  "hash_len": 32,
+  "salt_len": 16,
+  "samples": 20,
+  "median_verify_ms": 69.429,
+  "p95_verify_ms": 82.178,
+  "percentile_method": "nearest-rank: ceil(percentile * samples), 1-indexed",
+  "selection_justification": "Candidate Argon2id configuration (memory_cost=65536 KiB [64 MiB], time_cost=3, parallelism=4) measured median=69.429ms and p95=82.178ms over 20 samples. The 64 MiB memory cost provides memory-hardness defense against GPU/ASIC cracking. This latency evidence is specific to the current execution environment and is NOT claimed to be a universally optimal baseline configuration. Independent benchmarking on target deployment hardware is required prior to production deployment."
+}
