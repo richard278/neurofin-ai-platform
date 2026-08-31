@@ -30,6 +30,7 @@ dependencies = [
   "asyncpg>=0.31.0,<1.0.0",
   "alembic>=1.19.0,<2.0.0",
   "argon2-cffi>=25.1.0,<26.0.0",
+  "PyJWT[crypto]>=2.13.0,<3.0.0",
 ]
 
 [project.optional-dependencies]

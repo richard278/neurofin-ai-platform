@@ -3,12 +3,23 @@ from uuid import UUID, uuid4
 
 import pytest
 
-from app.domain.entities.user import InvalidUserEmailError, User, UserRole
+from app.domain.entities.user import (
+    InvalidUserEmailError,
+    User,
+    UserRole,
+    canonicalize_user_email,
+)
 from app.domain.repositories.user_repository import (
     UserAlreadyExistsError,
     UserRepository,
     UserRepositoryError,
 )
+
+
+def test_canonicalize_user_email_matches_user_create() -> None:
+    raw = "  Richard.Milian+lab@Example.COM  "
+    canonical = canonicalize_user_email(raw)
+    assert canonical == User.create(raw, UserRole.ANALYST).email
 
 
 @pytest.mark.parametrize(

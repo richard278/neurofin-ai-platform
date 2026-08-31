@@ -60,7 +60,7 @@ def _validate_email(email: str) -> None:
             raise InvalidUserEmailError("email domain label contains unsupported characters")
 
 
-def _canonicalize_email(raw_email: str) -> str:
+def canonicalize_user_email(raw_email: str) -> str:
     if not isinstance(raw_email, str):
         raise InvalidUserEmailError("email must be a string")
 
@@ -87,5 +87,5 @@ class User:
 
     @classmethod
     def create(cls, raw_email: str, role: UserRole) -> "User":
-        canonical_email = _canonicalize_email(raw_email)
+        canonical_email = canonicalize_user_email(raw_email)
         return cls(id=uuid4(), email=canonical_email, role=role)
