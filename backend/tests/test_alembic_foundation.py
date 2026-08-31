@@ -57,11 +57,15 @@ def test_auth_head_descends_from_baseline() -> None:
     config = Config(str(ini_path))
     script = ScriptDirectory.from_config(config)
 
-    assert script.get_heads() == ["20260824a001"]
+    assert script.get_heads() == ["20260829a001"]
 
-    head_rev = script.get_revision("20260824a001")
+    head_rev = script.get_revision("20260829a001")
     assert head_rev is not None
-    assert head_rev.down_revision == "116464527395"
+    assert head_rev.down_revision == "20260824a001"
+
+    prev_rev = script.get_revision("20260824a001")
+    assert prev_rev is not None
+    assert prev_rev.down_revision == "116464527395"
 
 
 def test_env_py_uses_infrastructure_metadata() -> None:
@@ -70,6 +74,7 @@ def test_env_py_uses_infrastructure_metadata() -> None:
 
     assert "from app.infrastructure.database.base import Base" in source
     assert "from app.infrastructure.database.models.user import UserModel" in source
+    assert "from app.infrastructure.database.models.user_credential import UserCredentialModel" in source
     assert "target_metadata = Base.metadata" in source
 
 

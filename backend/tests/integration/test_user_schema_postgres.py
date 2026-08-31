@@ -52,7 +52,11 @@ async def test_users_schema_matches_contract() -> None:
                 """
             )
         )
-        assert [row[0] for row in table_rows] == ["alembic_version", "users"]
+        assert [row[0] for row in table_rows] == [
+            "alembic_version",
+            "user_credentials",
+            "users",
+        ]
 
         column_rows = await session.execute(
             text(

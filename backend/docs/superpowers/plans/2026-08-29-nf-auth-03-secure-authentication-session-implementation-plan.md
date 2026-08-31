@@ -668,6 +668,9 @@ After controlled push, prove `HEAD == origin/main`, clean tree, then STOP again 
 - Create: `backend/alembic/versions/20260829a001_create_user_credentials.py`
 - Create: `backend/tests/test_credential_orm_repository.py`
 - Create: `backend/tests/integration/test_credential_postgres.py`
+- Modify: `backend/tests/integration/test_user_schema_postgres.py`
+
+**Controlled clarification NF-AUTH-03-B-R1:** The existing global PostgreSQL schema inventory test must be updated in `03-B` because it asserts the exact set of public tables. Its expected inventory becomes `alembic_version`, `users`, and `user_credentials`. This preserves strict schema regression coverage; it does not relax the assertion or expand credential behavior.
 
 **Interfaces:**
 - Consumes: `PasswordCredential`, `CredentialRepository`, `CredentialRepositoryError`, `CredentialAlreadyExistsError`.
@@ -866,6 +869,8 @@ Expected head: `20260829a001`.
 10. repository never commits or rolls back.
 
 Fixtures may create `User` rows directly through the approved `UserRepository`; that is test setup, not provisioning.
+
+The existing `test_user_schema_postgres.py` exact public-table inventory must continue to assert the full set and add `user_credentials`; do not replace it with a partial-membership assertion.
 
 - [ ] **Step 2.9: Run PostgreSQL Gate B**
 

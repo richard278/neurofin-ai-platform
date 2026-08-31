@@ -8,6 +8,7 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 from alembic import context
 from app.infrastructure.database.base import Base
 from app.infrastructure.database.models.user import UserModel
+from app.infrastructure.database.models.user_credential import UserCredentialModel
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -18,7 +19,7 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-_ = UserModel
+_ = (UserModel, UserCredentialModel)
 target_metadata = Base.metadata
 
 
