@@ -7,6 +7,10 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from alembic import context
 from app.infrastructure.database.base import Base
+from app.infrastructure.database.models.refresh import (
+    RefreshSessionModel,
+    RefreshTokenModel,
+)
 from app.infrastructure.database.models.user import UserModel
 from app.infrastructure.database.models.user_credential import UserCredentialModel
 
@@ -19,7 +23,7 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-_ = (UserModel, UserCredentialModel)
+_ = (UserModel, UserCredentialModel, RefreshSessionModel, RefreshTokenModel)
 target_metadata = Base.metadata
 
 
