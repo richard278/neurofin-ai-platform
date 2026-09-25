@@ -16,6 +16,9 @@ class Settings(BaseSettings):
     ]
     default_forecast_horizon: int = 12
     database_url: PostgresDsn | None = None
+    twelve_data_api_key: str | None = None
+    twelve_data_base_url: str = "https://api.twelvedata.com"
+    market_data_timeout_seconds: float = 5.0
     argon2_memory_cost_kib: int = 65536
     argon2_time_cost: int = 3
     argon2_parallelism: int = 4
@@ -60,6 +63,13 @@ class Settings(BaseSettings):
         if not path or path.strip("/") == "":
             raise ValueError("DATABASE_URL must include a database name in the path.")
 
+        return value
+
+    @field_validator("market_data_timeout_seconds")
+    @classmethod
+    def validate_market_data_timeout(cls, value: float) -> float:
+        if value <= 0:
+            raise ValueError("MARKET_DATA_TIMEOUT_SECONDS must be greater than zero.")
         return value
 
 

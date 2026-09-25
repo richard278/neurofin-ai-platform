@@ -57,6 +57,7 @@ backend/
 
 - `GET /api/v1/health`
 - `POST /api/v1/forecast`
+- `POST /api/v1/forecast/market-data` (Uses a simple moving average on external data. Requires `TWELVE_DATA_API_KEY` in `.env`)
 
 ## Testing
 

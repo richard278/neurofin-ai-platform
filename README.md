@@ -19,7 +19,7 @@ Validated locally:
 
 ## Core stack
 
-- Python 3.10
+- Python 3.11
 - FastAPI
 - Pydantic
 - NumPy
@@ -31,6 +31,7 @@ Validated locally:
 - Azure-compatible roadmap
 
 ## Repository layout
+
 
 ```text
 neurofin-ai-platform/
@@ -74,7 +75,7 @@ cd backend
 Create and activate a virtual environment on Windows CMD:
 
 ```bash
-py -3.10 -m venv .venv
+py -3.11 -m venv .venv
 .venv\Scripts\activate.bat
 ```
 
@@ -100,7 +101,7 @@ python -m pytest
 Expected result:
 
 ```text
-3 passed
+> 170 passed
 ```
 
 ## Run the API
@@ -122,9 +123,10 @@ http://127.0.0.1:8000/docs
 ```text
 GET  /api/v1/health
 POST /api/v1/forecast
+POST /api/v1/forecast/market-data
 ```
 
-Example forecast request:
+Example `POST /api/v1/forecast` request:
 
 ```json
 {
@@ -157,6 +159,36 @@ Example response:
 }
 ```
 
+Example `POST /api/v1/forecast/market-data` request:
+*(Requires `TWELVE_DATA_API_KEY` to be set in `.env`)*
+
+```json
+{
+  "symbol": "MSFT",
+  "horizon": 2,
+  "observations": 3
+}
+```
+
+Example response (uses a simple moving average on historical market data, illustrative):
+
+```json
+{
+  "symbol": "MSFT",
+  "horizon": 2,
+  "points": [
+    {
+      "step": 1,
+      "value": 101.75
+    },
+    {
+      "step": 2,
+      "value": 101.75
+    }
+  ]
+}
+```
+
 ## Architecture approach
 
 The backend follows a Clean Architecture-oriented structure:
@@ -168,15 +200,17 @@ The backend follows a Clean Architecture-oriented structure:
 
 ## Strategic roadmap
 
-The current MVP is intentionally focused and portfolio-ready. Future evolution may include:
+The current MVP is intentionally focused and portfolio-ready. It includes core foundations for authentication, persistent storage, integration with external market data (Twelve Data), and an existing frontend client for dashboards and forecast visualization.
 
-- More advanced forecasting models.
-- External financial data providers.
-- Authentication and user accounts.
-- Persistent storage.
+To use the market data forecasting endpoint, set your API key in the `.env` file (do not use real keys in public repositories):
+```env
+TWELVE_DATA_API_KEY=your_test_key_here
+```
+
+Future evolution may include:
+- More advanced forecasting models (currently uses SMA).
 - Azure deployment.
 - SaaS-oriented multi-tenant architecture.
-- Frontend client for dashboards and forecast visualization.
 
 ## Documentation
 
