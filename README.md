@@ -1,37 +1,33 @@
 # NeuroFin AI Platform
 
-AI-powered financial forecasting platform built with **FastAPI**, **Clean Architecture** and **Machine Learning foundations**.
+NeuroFin is a financial forecasting MVP with a FastAPI backend and a React/TypeScript client. It brings together a REST API, interactive forecast visualization, external market data integration, and tested foundations for authentication and PostgreSQL persistence.
 
-This repository contains the initial MVP backend for NeuroFin AI Platform. The current functional module is focused on financial forecasting through a REST API.
+The current forecast method is a simple moving average (SMA). The architecture keeps data providers and forecasting methods behind contracts so they can evolve independently. Advanced model training and evaluation remain on the roadmap.
 
 ## MVP status
 
 Current version: `v0.1.0-mvp`
 
-Validated locally:
+Available today:
 
-- FastAPI application running successfully.
-- Swagger UI available at `/docs`.
-- Health endpoint validated.
-- Forecast endpoint validated.
-- Automated tests passing.
-- Stable Python dependency file defined with `requirements.txt`.
+- FastAPI endpoints for health, forecasts from supplied historical values, and forecasts from daily market data.
+- A React dashboard with health information and an interactive forecast page for supplied historical values. The market data endpoint is currently available through the API, not that page.
+- A Twelve Data adapter for retrieving daily closing prices. The market data endpoint requires a local API key.
+- Authentication and PostgreSQL persistence components with automated tests. These are foundations in the backend; a complete public authentication workflow is not exposed by the current API.
+- Automated backend tests. The latest local run for GC-01 recorded `184 passed, 22 skipped, 1 warning` on September 25, 2026; results depend on the environment and which integration tests are enabled.
 
 ## Core stack
 
-- Python 3.11
-- FastAPI
-- Pydantic
-- NumPy
-- Pandas
-- SciPy
-- scikit-learn
-- Pytest
-- Clean Architecture
-- Azure-compatible roadmap
+- Python 3.11+, FastAPI, Pydantic v2
+- React, Vite, TypeScript
+- SQLAlchemy 2 async, asyncpg, Alembic, PostgreSQL (local Compose setup)
+- Argon2id and PS256 JWT components for authentication foundations
+- HTTPX for the external market data adapter
+- NumPy, Pandas, SciPy, scikit-learn, and joblib as available analysis and ML dependencies; the current forecast implementation is SMA
+- pytest, Ruff, and mypy
+- Clean Architecture boundaries across domain, application, infrastructure, and presentation
 
 ## Repository layout
-
 
 ```text
 neurofin-ai-platform/
@@ -59,7 +55,10 @@ neurofin-ai-platform/
 │   ├── .env.example
 │   └── README.md
 ├── frontend/
+│   ├── src/
 │   └── README.md
+├── infra/
+│   └── postgres/
 ├── .gitignore
 └── README.md
 ```
@@ -74,7 +73,7 @@ cd backend
 
 Create and activate a virtual environment on Windows CMD:
 
-```bash
+```bat
 py -3.11 -m venv .venv
 .venv\Scripts\activate.bat
 ```
@@ -82,27 +81,25 @@ py -3.11 -m venv .venv
 Install dependencies:
 
 ```bash
-python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
 
-Validate dependency consistency:
+Copy `.env.example` to `.env` and set local values as needed. To use the market data endpoint, replace the placeholder with your own Twelve Data key:
+
+```env
+TWELVE_DATA_API_KEY=replace-with-your-own-key
+```
+
+Do not commit `.env` or a real API key. Without the key, the market data endpoint returns HTTP 503; health and forecasts from supplied values remain available.
+
+Validate dependency consistency and run tests:
 
 ```bash
 python -m pip check
-```
-
-Run tests:
-
-```bash
 python -m pytest
 ```
 
-Expected result:
-
-```text
-> 170 passed
-```
+PostgreSQL integration tests require a configured disposable database and are skipped when that integration environment is not enabled.
 
 ## Run the API
 
@@ -112,11 +109,7 @@ From the `backend` directory:
 uvicorn app.main:app --reload
 ```
 
-Open Swagger UI:
-
-```text
-http://127.0.0.1:8000/docs
-```
+Open Swagger UI at `http://127.0.0.1:8000/docs`.
 
 ## Available endpoints
 
@@ -126,7 +119,7 @@ POST /api/v1/forecast
 POST /api/v1/forecast/market-data
 ```
 
-Example `POST /api/v1/forecast` request:
+Example `POST /api/v1/forecast` request with supplied historical values:
 
 ```json
 {
@@ -143,24 +136,14 @@ Example response:
   "symbol": "MSFT",
   "horizon": 3,
   "points": [
-    {
-      "step": 1,
-      "value": 101.75
-    },
-    {
-      "step": 2,
-      "value": 101.75
-    },
-    {
-      "step": 3,
-      "value": 101.75
-    }
+    { "step": 1, "value": 101.75 },
+    { "step": 2, "value": 101.75 },
+    { "step": 3, "value": 101.75 }
   ]
 }
 ```
 
-Example `POST /api/v1/forecast/market-data` request:
-*(Requires `TWELVE_DATA_API_KEY` to be set in `.env`)*
+Example `POST /api/v1/forecast/market-data` request (requires `TWELVE_DATA_API_KEY`):
 
 ```json
 {
@@ -170,62 +153,54 @@ Example `POST /api/v1/forecast/market-data` request:
 }
 ```
 
-Example response (uses a simple moving average on historical market data, illustrative):
+Illustrative response using SMA on closing prices returned by the provider; actual values depend on the retrieved series:
 
 ```json
 {
   "symbol": "MSFT",
   "horizon": 2,
   "points": [
-    {
-      "step": 1,
-      "value": 101.75
-    },
-    {
-      "step": 2,
-      "value": 101.75
-    }
+    { "step": 1, "value": 101.75 },
+    { "step": 2, "value": 101.75 }
   ]
 }
 ```
 
 ## Architecture approach
 
-The backend follows a Clean Architecture-oriented structure:
+The backend separates responsibilities across four layers:
 
-- `domain`: business entities, service contracts and domain abstractions.
-- `application`: use cases.
-- `infrastructure`: concrete implementations, including the initial ML forecaster.
-- `presentation`: API routes, schemas and dependency wiring.
+- `domain`: entities and contracts for forecasts, users, and market data.
+- `application`: use cases that coordinate domain contracts.
+- `infrastructure`: SMA forecasting, market data integration, and database adapters.
+- `presentation`: FastAPI routes, schemas, and dependency wiring.
+
+```mermaid
+flowchart TB
+  Client["React client and API consumers"] --> API["FastAPI presentation"]
+  API --> UseCases["Application use cases"]
+  UseCases --> Contracts["Domain contracts"]
+  Adapters["Infrastructure adapters"] -->|implement| Contracts
+  Adapters --> Market["Twelve Data"]
+  Adapters --> Storage["PostgreSQL and in-memory storage"]
+```
+
+The market forecast use case depends on the `MarketDataProvider` contract and passes historical closing prices to `ForecastService`. `TwelveDataMarketDataProvider` handles provider-specific authentication, `/time_series` requests, response parsing, and error mapping. A different provider can be integrated through another adapter and dependency wiring without changing the forecasting domain model or use case. Requests sent through an adapter remain subject to that provider's availability, limits, and terms.
 
 ## Strategic roadmap
 
-The current MVP is intentionally focused and portfolio-ready. It includes core foundations for authentication, persistent storage, integration with external market data (Twelve Data), and an existing frontend client for dashboards and forecast visualization.
+The next steps build on the current MVP:
 
-To use the market data forecasting endpoint, set your API key in the `.env` file (do not use real keys in public repositories):
-```env
-TWELVE_DATA_API_KEY=your_test_key_here
-```
-
-Future evolution may include:
-- More advanced forecasting models (currently uses SMA).
-- Azure deployment.
-- SaaS-oriented multi-tenant architecture.
+- Complete the public authentication and session workflow around the existing security and persistence foundations.
+- Connect the React client to the market data forecast endpoint and improve end-to-end demonstration flows.
+- Train, evaluate, compare, and version forecasting models beyond the SMA baseline.
+- Prepare deployment and operational documentation for a public demonstration.
+- Explore SaaS capabilities, including tenant boundaries, only after the core workflows are validated.
 
 ## Documentation
 
-Technical documentation is available in:
-
-```text
-backend/docs/
-```
-
-Architecture decisions are available in:
-
-```text
-backend/docs/adr/
-```
+Technical documentation is available in [`backend/docs/`](backend/docs/). Architecture decisions are recorded in [`backend/docs/adr/`](backend/docs/adr/).
 
 ## Notes
 
-This project is educational and portfolio-oriented. Forecast results are not financial advice.
+NeuroFin is under active development. Forecast outputs are illustrative and do not constitute financial advice.
