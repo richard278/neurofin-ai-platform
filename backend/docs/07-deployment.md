@@ -1,186 +1,160 @@
-# NeuroFin AI Platform
+NeuroFin AI Platform
 
-# Documento 07 — Deployment y Entornos
+Documento 07 — Deployment y Entornos
 
-**Versión:** 1.0.0
+Versión: 1.0.0
 
-**Estado:** Guía de despliegue inicial
+Estado: Ejecución local y opciones para una futura demo pública.
 
-**Autor:** Richard Milian
+Autor: Richard Milian
 
-**Proyecto:** NeuroFin AI Platform
+Proyecto: NeuroFin AI Platform
 
----
-
-# Propósito
+Propósito
 
 Este documento define la estrategia de ejecución, publicación y evolución de entornos para NeuroFin AI Platform.
 
 El objetivo principal es permitir que el proyecto pueda ejecutarse localmente como MVP profesional para portafolio, y que posteriormente pueda desplegarse en un entorno cloud sin alterar su arquitectura base.
 
----
-
-# Estrategia general
+Estrategia general
 
 La estrategia de deployment se divide en tres niveles:
 
-1. Ejecución local para desarrollo y demostración.
-2. Contenerización con Docker para portabilidad.
-3. Publicación cloud para demo pública y evolución SaaS.
+Ejecución local para desarrollo y demostración.
+
+PostgreSQL local mediante Compose; contenerización completa de la aplicación pendiente.
+
+Publicación cloud para demo pública y evolución SaaS.
 
 El MVP inicial no requiere infraestructura compleja. Para reclutadores, el valor principal será demostrar que la API puede instalarse, ejecutarse, probarse y entenderse con facilidad.
 
----
+Entornos previstos
 
-# Entornos previstos
-
-## Development
+Development
 
 Entorno local de desarrollo.
 
 Uso:
 
-* Programación diaria.
-* Ejecución de pruebas.
-* Revisión de Swagger.
-* Validación de arquitectura.
+Programación diaria.
+
+Ejecución de pruebas.
+
+Revisión de Swagger.
+
+Validación de arquitectura.
 
 Configuración esperada:
 
-```text
 APP_ENV=development
 API_PREFIX=/api/v1
-```
 
----
-
-## Staging
+Staging
 
 Entorno intermedio de validación.
 
 Uso futuro:
 
-* Pruebas antes de producción.
-* Validación con frontend.
-* Pruebas con datos de mercado reales.
-* Validación de seguridad y CORS.
+Pruebas antes de producción.
+
+Validación con frontend.
+
+Pruebas con datos de mercado reales.
+
+Validación de seguridad y CORS.
 
 Estado:
 
 🔵 Evolución posterior al MVP.
 
----
-
-## Production
+Production
 
 Entorno productivo.
 
 Uso futuro:
 
-* Usuarios reales.
-* Autenticación.
-* Persistencia.
-* Observabilidad.
-* Escalabilidad.
+Usuarios reales.
+
+Autenticación.
+
+Persistencia.
+
+Observabilidad.
+
+Escalabilidad.
 
 Estado:
 
 🔵 Evolución SaaS.
 
----
+Ejecución local del backend
 
-# Ejecución local del backend
+Desde la carpeta backend:
 
-Desde la carpeta `backend`:
-
-```bash
 python -m venv .venv
-```
 
 Activación en Windows:
 
-```bash
 .venv\Scripts\activate
-```
 
 Activación en Linux/macOS:
 
-```bash
 source .venv/bin/activate
-```
 
 Instalación:
 
-```bash
 pip install -e .[dev]
-```
 
 Ejecución:
 
-```bash
 uvicorn app.main:app --reload
-```
 
 URL local esperada:
 
-```text
 http://127.0.0.1:8000
-```
 
 Documentación Swagger:
 
-```text
 http://127.0.0.1:8000/docs
-```
 
 ReDoc:
 
-```text
 http://127.0.0.1:8000/redoc
-```
 
----
-
-# Pruebas automatizadas
+Pruebas automatizadas
 
 El backend debe validarse con:
 
-```bash
 pytest -q
-```
 
 Pruebas actuales esperadas:
 
-* Health check.
-* Generación de forecast.
-* Validación de entrada inválida.
+Health check.
+
+Forecast con valores proporcionados y con proveedor de mercado simulado en pruebas.
+
+Validación de entrada inválida.
 
 El estado saludable del MVP requiere que todas las pruebas pasen antes de publicar cambios.
 
----
-
-# Endpoints mínimos para demo
+Endpoints mínimos para demo
 
 El MVP inicial debe poder demostrar:
 
-```text
 GET /api/v1/health
 POST /api/v1/forecast
-```
+POST /api/v1/forecast/market-data
 
-Ejemplo de payload para forecast:
+La ruta de mercado necesita TWELVE_DATA_API_KEY en el servidor; devuelve HTTP 503 si falta. El frontend actual consume la ruta de valores aportados. Ejemplo de payload para forecast manual:
 
-```json
 {
   "symbol": "MSFT",
   "historical_values": [100.0, 101.2, 102.5, 103.3],
   "horizon": 3
 }
-```
 
 Respuesta esperada:
 
-```json
 {
   "symbol": "MSFT",
   "horizon": 3,
@@ -190,23 +164,17 @@ Respuesta esperada:
     { "step": 3, "value": 101.75 }
   ]
 }
-```
 
----
-
-# Dockerización prevista
+Dockerización prevista
 
 La contenerización permitirá ejecutar la API de forma portable.
 
 Archivo sugerido:
 
-```text
 backend/Dockerfile
-```
 
 Estructura conceptual:
 
-```dockerfile
 FROM python:3.11-slim
 
 WORKDIR /app
@@ -220,127 +188,112 @@ RUN pip install --no-cache-dir -e .
 EXPOSE 8000
 
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
-```
 
 Este Dockerfile es una referencia de diseño; podrá agregarse cuando el MVP requiera publicación mediante contenedores.
 
----
+Docker Compose previsto
 
-# Docker Compose previsto
+Ya existe infra/postgres/compose.yml para PostgreSQL local. Un Compose para la aplicación completa podría incluir:
 
-Para una fase posterior, se podrá usar `docker-compose.yml` con:
+API FastAPI.
 
-* API FastAPI.
-* PostgreSQL.
-* Redis.
-* Servicio de frontend.
-* Worker de procesamiento.
+PostgreSQL.
+
+Redis.
+
+Servicio de frontend.
+
+Worker de procesamiento.
 
 Estructura futura:
 
-```text
 services:
   api:
   postgres:
   redis:
   frontend:
   worker:
-```
 
 Estado:
 
 🔵 Evolución SaaS.
 
----
-
-# Publicación inicial recomendada
+Publicación inicial recomendada
 
 Para portafolio y reclutadores, la secuencia recomendada es:
 
-1. Repositorio GitHub limpio.
-2. README claro con propósito, stack y comandos.
-3. Backend ejecutable localmente.
-4. Pruebas automatizadas pasando.
-5. Swagger disponible.
-6. Capturas o video corto de demo.
-7. Publicación cloud opcional.
+Repositorio GitHub limpio.
+
+README claro con propósito, stack y comandos.
+
+Backend ejecutable localmente.
+
+Pruebas automatizadas pasando.
+
+Swagger disponible.
+
+Capturas o video corto de demo.
+
+Evaluar publicación cloud cuando la demo sea reproducible; la plataforma queda por decidir.
 
 Esta secuencia evita sobredimensionar el proyecto antes de tener un MVP presentable.
 
----
+Selección de infraestructura para la demo
 
-# Opciones de despliegue cloud
+El primer despliegue público deberá reproducir el flujo funcional con el menor costo y carga operativa razonables. La decisión se tomará después de verificar requisitos del cliente React, del servicio FastAPI y, si un flujo público lo necesita, de PostgreSQL administrado.
 
-## Opción A — Azure App Service
+Componente
 
-Recomendada para una primera publicación sencilla.
+Capacidad requerida
 
-Ventajas:
+Opciones por evaluar
 
-* Menor complejidad inicial.
-* Compatible con aplicaciones Python.
-* Variables de entorno desde portal Azure.
-* Ideal para demo pública.
+Cliente React
 
-Uso sugerido:
+Build estático, HTTPS y URL pública
 
-🟡 Demo pública inicial.
+Hosting estático administrado.
 
----
+API FastAPI
 
-## Opción B — Azure Container Apps
+Proceso Python, variables de entorno, tráfico HTTPS y logs
 
-Recomendada para una evolución más profesional basada en contenedores.
+Servicio web administrado o contenedor.
 
-Ventajas:
+PostgreSQL
 
-* Escalabilidad administrada.
-* Separación de servicios.
-* Mejor alineación con arquitectura SaaS.
-* Compatible con workers y microservicios futuros.
+Persistencia duradera y conexión segura cuando se expongan flujos de identidad
 
-Uso sugerido:
+Servicio PostgreSQL administrado.
 
-🔵 SaaS / arquitectura avanzada.
+Render, Railway, Azure y otros proveedores pueden satisfacer partes de este esquema. Su elección depende de límites gratuitos, costo mensual, tiempo de arranque, disponibilidad, configuración de secretos, conectividad y experiencia de quien evalúa la demo. La evaluación de Azure detalla una opción posible; ADR-006 registra la independencia del alojamiento.
 
----
+No se anuncia una demo pública hasta haber verificado build, rutas, CORS, claves, comportamiento de la base de datos necesaria y respuesta tras inactividad en el proveedor elegido.
 
-## Opción C — Render, Railway o servicios similares
-
-Pueden utilizarse temporalmente si se busca una demo rápida y de bajo costo.
-
-Ventajas:
-
-* Simplicidad.
-* Rápida publicación.
-* Útil para una demo rápida.
-
-Restricción:
-
-No representan la visión cloud final basada en Azure.
-
----
-
-# Checklist de despliegue MVP
+Checklist de despliegue MVP
 
 Antes de publicar la demo:
 
-* Verificar que `.env` no esté versionado.
-* Confirmar que `.env.example` esté actualizado.
-* Ejecutar `pytest -q`.
-* Revisar Swagger.
-* Confirmar que CORS esté configurado.
-* Verificar que no exista `.venv` dentro del repositorio.
-* Validar que `README.md` explique instalación y ejecución.
-* Agregar capturas o guía de demo para reclutadores.
+Verificar que .env no esté versionado.
 
----
+Confirmar que .env.example esté actualizado.
 
-# Archivos que no deben subirse a GitHub
+Ejecutar pytest -q.
+
+Revisar Swagger.
+
+Confirmar que CORS permita únicamente los orígenes reales de la demo.
+
+Verificar que no exista .venv dentro del repositorio.
+
+Validar que README.md explique instalación y ejecución.
+
+Agregar capturas o guía de demo para reclutadores.
+
+Archivos que no deben subirse a GitHub
 
 No deben versionarse:
 
-```text
 .venv/
 __pycache__/
 .pytest_cache/
@@ -349,19 +302,15 @@ __pycache__/
 .env
 *.pyc
 .DS_Store
-```
 
 La exclusión del entorno virtual es importante porque reduce el tamaño del repositorio y evita problemas de portabilidad entre sistemas operativos.
 
----
-
-# Deployment futuro con CI/CD
+Deployment futuro con CI/CD
 
 En una fase posterior se podrá incorporar GitHub Actions.
 
 Flujo recomendado:
 
-```text
 Push / Pull Request
         ↓
 Install dependencies
@@ -377,48 +326,52 @@ Deploy to staging
 Manual approval
         ↓
 Deploy to production
-```
 
 Estado:
 
 🔵 Evolución posterior al MVP.
 
----
-
-# Observabilidad futura
+Observabilidad futura
 
 Para producción se recomienda integrar:
 
-* Logs estructurados.
-* Application Insights.
-* Métricas de latencia.
-* Métricas de errores.
-* Métricas de uso por endpoint.
-* Alertas ante fallos.
+Logs estructurados.
+
+Telemetría del proveedor seleccionado, si aporta valor.
+
+Métricas de latencia.
+
+Métricas de errores.
+
+Métricas de uso por endpoint.
+
+Alertas ante fallos.
 
 La observabilidad será fundamental cuando el proyecto evolucione a SaaS.
 
----
-
-# Consideraciones para SaaS
+Consideraciones para SaaS
 
 Antes de escalar a SaaS será necesario agregar:
 
-* Autenticación.
-* Gestión de usuarios.
-* Planes de suscripción.
-* Persistencia PostgreSQL.
-* Rate limiting.
-* Auditoría.
-* Tareas asíncronas.
-* Registro de predicciones.
-* Separación por tenant o cliente.
+Exponer y validar el flujo público de autenticación y gestión de usuarios sobre los componentes internos actuales.
+
+Planes de suscripción.
+
+Conectar los flujos públicos que requieran PostgreSQL; sus componentes para identidad y sesiones ya existen.
+
+Rate limiting.
+
+Auditoría.
+
+Tareas asíncronas.
+
+Registro de predicciones.
+
+Separación por tenant o cliente.
 
 Estos elementos no son obligatorios para el MVP inicial.
 
----
-
-# Conclusión
+Conclusión
 
 El deployment de NeuroFin AI Platform debe avanzar de forma progresiva.
 
