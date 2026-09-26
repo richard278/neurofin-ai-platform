@@ -468,4 +468,3 @@ async def test_refresh_unconsumed_expired_token_rejects_without_revoking_family(
     assert refresh_repo.sessions[s1_id].revoked_at is None
     assert len(refresh_repo.consumed_calls) == 0
     assert len(refresh_repo.tokens) == 1
-
