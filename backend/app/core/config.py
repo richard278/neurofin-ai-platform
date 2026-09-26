@@ -1,4 +1,5 @@
 from functools import lru_cache
+from pathlib import Path
 from typing import Annotated, Any
 
 from pydantic import PostgresDsn, field_validator
@@ -14,6 +15,9 @@ class Settings(BaseSettings):
         "http://localhost:3000",
         "http://127.0.0.1:3000",
     ]
+    auth_trusted_origin: str = "http://localhost:3000"
+    jwt_private_key_path: Path | None = None
+    jwt_public_key_path: Path | None = None
     default_forecast_horizon: int = 12
     database_url: PostgresDsn | None = None
     twelve_data_api_key: str | None = None

@@ -1,12 +1,30 @@
-"""Application dependency composition for forecast use cases."""
 from functools import lru_cache
 
+from fastapi import Request
+
+from ..application.security.sessions import (
+    LoginSessionService,
+    LogoutService,
+    RefreshSessionService,
+)
 from ..application.use_cases.generate_forecast import GenerateForecastUseCase
 from ..application.use_cases.generate_market_forecast import GenerateMarketForecastUseCase
 from ..core.config import get_settings
 from ..infrastructure.market_data.twelve_data_provider import TwelveDataMarketDataProvider
 from ..infrastructure.ml.simple_forecaster import SimpleMovingAverageForecaster
 from ..infrastructure.repositories.in_memory_forecast_repository import InMemoryForecastRepository
+
+
+def get_login_session_service(request: Request) -> LoginSessionService:
+    return request.app.state.login_session_service  # type: ignore[no-any-return]
+
+
+def get_refresh_session_service(request: Request) -> RefreshSessionService:
+    return request.app.state.refresh_session_service  # type: ignore[no-any-return]
+
+
+def get_logout_service(request: Request) -> LogoutService:
+    return request.app.state.logout_service  # type: ignore[no-any-return]
 
 
 @lru_cache

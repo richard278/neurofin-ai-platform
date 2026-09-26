@@ -19,8 +19,16 @@ function buildUrl(path: string): string {
   return `${getApiBaseUrl()}${normalizedPath}`;
 }
 
-export async function apiRequest<T>(path: string, init: RequestInit = {}): Promise<T> {
+export async function apiRequest<T>(
+  path: string,
+  init: RequestInit = {},
+  token?: string | null,
+): Promise<T> {
   const headers = new Headers(init.headers);
+
+  if (token && !headers.has('Authorization')) {
+    headers.set('Authorization', `Bearer ${token}`);
+  }
 
   if (init.body && !headers.has('Content-Type')) {
     headers.set('Content-Type', 'application/json');
